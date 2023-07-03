@@ -41,7 +41,6 @@ export default function AddTodo({ fetchList }) {
     if (newTodo.deadline !== null){
         newTodo.deadline = newTodo.deadline.format('YYYY-MM-DD')
     }
-    console.log(newTodo)
 
     await fetch("http://localhost:5050/record", {
       method: "POST",
@@ -62,7 +61,7 @@ export default function AddTodo({ fetchList }) {
   // This following section will display the form that takes the input from the user.
   return (
     <div>
-      <Button variant="" onClick={handleOpen}>+ Add To-do</Button>
+      <Button variant="" onClick={handleOpen}><Typography variant="h5">+ Add To-do</Typography></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -80,6 +79,7 @@ export default function AddTodo({ fetchList }) {
               label="Topic"
               value={todo.topic}
               onChange={(newValue) => updateTodo({ topic: newValue.target.value })}
+              sx={{ marginY:2 }}
             />
 
             <TextField
@@ -87,6 +87,7 @@ export default function AddTodo({ fetchList }) {
               label="Description"
               value={todo.description}
               onChange={(newValue) => updateTodo({ description: newValue.target.value })}
+              sx={{ marginY:2 }}
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -95,6 +96,7 @@ export default function AddTodo({ fetchList }) {
                 label="Deadline"
                 value={todo.deadline}
                 onChange={(newValue) => updateTodo({ deadline: newValue})}
+                sx={{ marginY:2 }}
               />
             </LocalizationProvider>
           </CardContent>

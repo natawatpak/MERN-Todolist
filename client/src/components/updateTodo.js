@@ -63,6 +63,7 @@ export default function UpdateTodo(props) {
               onChange={(newValue) =>
                 updateTodo({ topic: newValue.target.value })
               }
+              sx={{ marginY:2 }}
             />
 
             <TextField
@@ -72,6 +73,7 @@ export default function UpdateTodo(props) {
               onChange={(newValue) =>
                 updateTodo({ description: newValue.target.value })
               }
+              sx={{ marginY:2 }}
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -80,6 +82,7 @@ export default function UpdateTodo(props) {
                 label="Deadline"
                 value={todo.deadline}
                 onChange={(newValue) => updateTodo({ deadline: newValue })}
+                sx={{ marginY:2 }}
               />
             </LocalizationProvider>
           </CardContent>

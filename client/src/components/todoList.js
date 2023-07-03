@@ -40,9 +40,7 @@ export default function TodoList() {
         window.alert(message);
         return;
       }
-
       const resp = await response.json();
-      console.log(resp);
       const todos = resp.map((todo) => {
         todo.deadline = dayjs(todo.deadline);
         return todo;
@@ -93,48 +91,41 @@ export default function TodoList() {
       justifyContent="start"
       sx={{ minHeight: "100vh" }}
     >
-      <Grid item xs={4}>
-      <Container alignItems="start">
-        <AddTodo fetchList={fetchList} />
-        <Modal
-          open={editingModal}
-          onClose={closeEditing}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <UpdateTodo todo={editingTodo} closeEditing={closeEditing} />
-        </Modal>
-
-        <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        >
-          {todos.map((todo, i) => {
-            const labelId = `checkbox-list-label-${todo.id}`;
-            return (
-              <ListItem key={todo._id}>
-                <ListItemText primary={todo.topic} />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="edit"
-                    onClick={() => editTodo(todo)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => deleteTodo(todo)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Container>
-      </Grid>
+      <AddTodo fetchList={fetchList}/>
+      <Modal
+        open={editingModal}
+        onClose={closeEditing}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <UpdateTodo todo={editingTodo} closeEditing={closeEditing} />
+      </Modal>
+      <List sx={{ width: "50%", bgcolor: "background.paper" }}>
+        {todos.map((todo, i) => {
+          const labelId = `checkbox-list-label-${todo.id}`;
+          return (
+            <ListItem key={todo._id}>
+              <ListItemText primary={todo.topic} />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => editTodo(todo)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => deleteTodo(todo)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
+      </List>
     </Grid>
   );
 }
