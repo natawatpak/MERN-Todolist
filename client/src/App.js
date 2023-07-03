@@ -1,24 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
  
 // We use Route in order to define the different routes of our application
 import { Route, Routes } from "react-router-dom";
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
  
 // We import all the components we need in our app
-import RecordList from "./components/recordList";
-import Edit from "./components/edit";
-import Create from "./components/create";
 import Main from "./pages/main"; 
+import Navbar from "./layouts/navbar"
+
+//themes
+import lightTheme from "./themes/light"
+import darkTheme from "./themes/dark"
+
 
 const App = () => {
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const changeTheme = () =>{
+        setIsDarkTheme(!isDarkTheme)
+    };
  return (
+    <ThemeProvider theme={ isDarkTheme? createTheme(darkTheme) :createTheme(lightTheme)}>
+      <CssBaseline />
    <div>
+    <Navbar isDarkTheme={isDarkTheme} changeTheme={changeTheme} />
      <Routes>
         <Route path="/" element={<Main/>} />
-       {/* <Route exact path="/" element={<RecordList />} />
-       <Route path="/edit/:id" element={<Edit />} />
-       <Route path="/create" element={<Create />} /> */}
      </Routes>
    </div>
+   </ThemeProvider>
  );
 };
  

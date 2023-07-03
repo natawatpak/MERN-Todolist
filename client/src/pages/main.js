@@ -4,7 +4,6 @@ import AddTodo from "../components/addTodo";
 const Main = () => {
   return (
     <div>
-      <AddTodo />
       <TodoList />
     </div>
   );

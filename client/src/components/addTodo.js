@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -14,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 
-export default function AddTodo() {
+export default function AddTodo({ fetchList }) {
   const [todo, setTodo] = useState({
     topic: "",
     description: "",
@@ -24,8 +23,6 @@ export default function AddTodo() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const navigate = useNavigate();
 
   // These methods will update the state properties.
   function updateTodo(value) {
@@ -58,13 +55,14 @@ export default function AddTodo() {
     });
 
     setTodo({ topic: "", description: "", deadline: null });
-    navigate("/");
+    fetchList()
+    handleClose()
   }
 
   // This following section will display the form that takes the input from the user.
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button variant="" onClick={handleOpen}>+ Add To-do</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -74,8 +72,8 @@ export default function AddTodo() {
         <Card sx={{ minWidth: 275 }}>
             <form onSubmit={onSubmit}>
           <CardContent>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add to do
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{pb:3}}>
+              Add to-do
             </Typography>
             <TextField
               id="topic"
@@ -101,7 +99,7 @@ export default function AddTodo() {
             </LocalizationProvider>
           </CardContent>
           <CardActions>
-            <Button size="small" type="submit" >Add</Button>
+            <Button variant="" size="small" type="submit" color="primary">Add</Button>
           </CardActions>
           </form>
         </Card>
