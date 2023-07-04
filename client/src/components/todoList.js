@@ -6,6 +6,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
@@ -100,12 +101,21 @@ export default function TodoList() {
       >
         <UpdateTodo todo={editingTodo} closeEditing={closeEditing} />
       </Modal>
-      <List sx={{ width: "50%", bgcolor: "background.paper" }}>
-        {todos.map((todo, i) => {
+      <List sx={{ width: "50%", minWidth:"250px", bgcolor: "background.paper" }}>
+        {todos.sort((a,b)=>{
+          return b.deadline.isBefore(a.deadline)? 1:-1
+        }).map((todo, i) => {
           const labelId = `checkbox-list-label-${todo.id}`;
           return (
             <ListItem key={todo._id}>
-              <ListItemText primary={todo.topic} />
+              <Grid alignItems='start' direction='column' sx={{ paddingRight: 3 }}>
+                <Typography variant='h4'>{todo.deadline.format('DD')}</Typography>
+                <Typography>{todo.deadline.format('MM-YY')}</Typography>
+              </Grid>
+              <ListItemText primary={todo.topic} 
+              secondary={
+                todo.description
+              }/>
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
