@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
-import { useNavigate } from "react-router";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -50,7 +47,7 @@ export default function UpdateTodo(props) {
   // This following section will display the form that takes the input from the user.
   return (
     <div>
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 275, px: 4}}>
         <form onSubmit={onSubmit}>
           <CardContent>
             <Typography id="modal-modal-title" variant="h6" component="h2" sx={{pb:3}}>
@@ -87,7 +84,7 @@ export default function UpdateTodo(props) {
             </LocalizationProvider>
           </CardContent>
           <CardActions>
-            <Button variant="" size="small" type="submit">
+            <Button variant="" size="small" type="submit" sx={{ mb: 2 }}>
               Save
             </Button>
           </CardActions>

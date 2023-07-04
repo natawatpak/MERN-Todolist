@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -68,7 +66,7 @@ export default function AddTodo({ fetchList }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275, px: 4 }}>
             <form onSubmit={onSubmit}>
           <CardContent>
             <Typography id="modal-modal-title" variant="h6" component="h2" sx={{pb:3}}>
@@ -79,7 +77,7 @@ export default function AddTodo({ fetchList }) {
               label="Topic"
               value={todo.topic}
               onChange={(newValue) => updateTodo({ topic: newValue.target.value })}
-              sx={{ marginY:2 }}
+              sx={{ my:2 }}
             />
 
             <TextField
@@ -87,7 +85,7 @@ export default function AddTodo({ fetchList }) {
               label="Description"
               value={todo.description}
               onChange={(newValue) => updateTodo({ description: newValue.target.value })}
-              sx={{ marginY:2 }}
+              sx={{ my:2 }}
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -96,12 +94,12 @@ export default function AddTodo({ fetchList }) {
                 label="Deadline"
                 value={todo.deadline}
                 onChange={(newValue) => updateTodo({ deadline: newValue})}
-                sx={{ marginY:2 }}
+                sx={{ my:2 }}
               />
             </LocalizationProvider>
           </CardContent>
           <CardActions>
-            <Button variant="" size="small" type="submit" color="primary">Add</Button>
+            <Button variant="" size="small" type="submit" color="primary" sx={{mb:2}}>Add</Button>
           </CardActions>
           </form>
         </Card>

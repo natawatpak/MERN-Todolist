@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 // import * as React from 'react';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 import dayjs from "dayjs";
@@ -22,7 +18,6 @@ import UpdateTodo from "./updateTodo";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
-  const [checked, setChecked] = useState([0]);
 
   const [editingTodo, setEditingTodo] = useState(null);
   const [editingModal, setEditingModal] = useState(false);
@@ -43,7 +38,8 @@ export default function TodoList() {
       }
       const resp = await response.json();
       const todos = resp.map((todo) => {
-        todo.deadline = dayjs(todo.deadline);
+        
+        todo.deadline = todo.deadline? dayjs(todo.deadline):null;
         return todo;
       });
       setTodos(todos);
@@ -70,19 +66,6 @@ export default function TodoList() {
     fetchList();
   }
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
   return (
     <Grid
       container
@@ -92,7 +75,7 @@ export default function TodoList() {
       justifyContent="start"
       sx={{ minHeight: "100vh" }}
     >
-      <AddTodo fetchList={fetchList}/>
+      <AddTodo fetchList={fetchList} />
       <Modal
         open={editingModal}
         onClose={closeEditing}
@@ -101,40 +84,77 @@ export default function TodoList() {
       >
         <UpdateTodo todo={editingTodo} closeEditing={closeEditing} />
       </Modal>
-      <List sx={{ width: "50%", minWidth:"250px", bgcolor: "background.paper" }}>
-        {todos.sort((a,b)=>{
-          return b.deadline.isBefore(a.deadline)? 1:-1
-        }).map((todo, i) => {
-          const labelId = `checkbox-list-label-${todo.id}`;
-          return (
-            <ListItem key={todo._id}>
-              <Grid alignItems='start' direction='column' sx={{ paddingRight: 3 }}>
-                <Typography variant='h4'>{todo.deadline.format('DD')}</Typography>
-                <Typography>{todo.deadline.format('MM-YY')}</Typography>
-              </Grid>
-              <ListItemText primary={todo.topic} 
-              secondary={
-                todo.description
-              }/>
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  onClick={() => editTodo(todo)}
+      <List
+        sx={{ width: "50%", minWidth: "250px", bgcolor: "background.paper" }}
+      >
+        {todos
+          .sort((a, b) => {
+            if(a.deadline===null) return 1
+            if(b.deadline===null) return -1
+            return b.deadline.isBefore(a.deadline)? 1 : -1;
+          })
+          .map((todo, i) => {
+            const DD =
+              todo.deadline === null
+                ? "--"
+                : todo.deadline.format("DD");
+            const MMYY =
+              todo.deadline === null
+                ? ""
+                : todo.deadline.format("MM-YY");
+
+            return (
+              <ListItem
+                key={todo._id}
+                sx={{
+                  "&:hover": {
+                    color: "secondary.main",
+                    opacity:0.8,
+                  },
+                }}
+              >
+                <Grid
+                  alignItems="center"
+                  justifyContent="center"
+                  direction="column"
+                  sx={{ paddingRight: 3 }}
                 >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => deleteTodo(todo)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
-        })}
+                  <Typography variant="h4">{DD}</Typography>
+                  <Typography>{MMYY}</Typography>
+                </Grid>
+                <ListItemText
+                  primary={todo.topic}
+                  secondary={todo.description}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    onClick={() => editTodo(todo)}
+                    sx={{
+                      "&:hover": {
+                        color: "secondary.main",
+                      },
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => deleteTodo(todo)}
+                    sx={{
+                      "&:hover": {
+                        color: "secondary.main",
+                      },
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            );
+          })}
       </List>
     </Grid>
   );
