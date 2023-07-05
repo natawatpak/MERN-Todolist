@@ -4,14 +4,14 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
-// This section will help you get a list of all the records.
+// Get a list of all the records
 router.get("/", async (req, res) => {
   let collection = await db.collection("todo_list");
   let results = await collection.find({}).toArray();
   res.send(results).status(200);
 });
 
-// This section will help you get a single record by id
+// Get a single record by id
 router.get("/:id", async (req, res) => {
   let collection = await db.collection("todo_list");
   let query = { _id: new ObjectId(req.params.id) };
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
   else res.send(result).status(200);
 });
 
-// This section will help you create a new record.
+// Create a new record.
 router.post("/", async (req, res) => {
   let newDocument = {
     topic: req.body.topic,
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   res.send(result).status(204);
 });
 
-// This section will help you update a record by id.
+// Update a record by id.
 router.patch("/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
   const updates = {
@@ -50,7 +50,7 @@ router.patch("/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
-// This section will help you delete a record
+// Delete a record
 router.delete("/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -11,20 +12,22 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
 export default function UpdateTodo(props) {
+  // Keep input field values
+  // First, load to-do attributes into input fields
   const [todo, setTodo] = useState({
-    topic: props.todo ? props.todo.topic: '',
-    description: props.todo ? props.todo.description: '',
-    deadline: props.todo ? props.todo.deadline: null,
+    topic: props.todo ? props.todo.topic : "",
+    description: props.todo ? props.todo.description : "",
+    deadline: props.todo ? props.todo.deadline : null,
   });
 
-  // These methods will update the state properties.
+  // Update the state properties.
   function updateTodo(value) {
     return setTodo((prev) => {
       return { ...prev, ...value };
     });
   }
 
-  // This function will handle the submission.
+  // Handle the submission for updating a record.
   async function onSubmit(e) {
     e.preventDefault();
     const editedTodo = {
@@ -33,7 +36,7 @@ export default function UpdateTodo(props) {
       deadline: todo.deadline.format("YYYY-MM-DD"),
     };
 
-    // This will send a post request to update the data in the database.
+    // Send post request to update a record in the database.
     await fetch(`http://localhost:5050/record/${props.todo._id}`, {
       method: "PATCH",
       body: JSON.stringify(editedTodo),
@@ -44,15 +47,21 @@ export default function UpdateTodo(props) {
     props.closeEditing();
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
-      <Card sx={{ minWidth: 275, px: 4}}>
+      <Card sx={{ minWidth: 275, px: 4 }}>
         <form onSubmit={onSubmit}>
           <CardContent>
-            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{pb:3}}>
+            {/* Header */}
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ pb: 3 }}
+            >
               Update to-do
             </Typography>
+
             <TextField
               id="topic"
               label="Topic"
@@ -60,7 +69,7 @@ export default function UpdateTodo(props) {
               onChange={(newValue) =>
                 updateTodo({ topic: newValue.target.value })
               }
-              sx={{ marginY:2 }}
+              sx={{ marginY: 2 }}
             />
 
             <TextField
@@ -70,7 +79,7 @@ export default function UpdateTodo(props) {
               onChange={(newValue) =>
                 updateTodo({ description: newValue.target.value })
               }
-              sx={{ marginY:2 }}
+              sx={{ marginY: 2 }}
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -79,7 +88,7 @@ export default function UpdateTodo(props) {
                 label="Deadline"
                 value={todo.deadline}
                 onChange={(newValue) => updateTodo({ deadline: newValue })}
-                sx={{ marginY:2 }}
+                sx={{ marginY: 2 }}
               />
             </LocalizationProvider>
           </CardContent>

@@ -1,41 +1,23 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Switch from '@mui/material/Switch';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import * as React from "react";
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Switch from "@mui/material/Switch";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-function NavBar({isDarkTheme, changeTheme}) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
+function NavBar({ isDarkTheme, changeTheme }) {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <FormatListBulletedIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* Top navigation bar in md */}
+          <FormatListBulletedIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -43,19 +25,20 @@ function NavBar({isDarkTheme, changeTheme}) {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             To-do list
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-          </Box>
-          <FormatListBulletedIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
+          {/* Top navigation bar in xs */}
+          <FormatListBulletedIcon
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+          />
           <Typography
             variant="h5"
             noWrap
@@ -63,22 +46,28 @@ function NavBar({isDarkTheme, changeTheme}) {
             href=""
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             To-do list
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          </Box>
-          <Switch label="Mode" checked={isDarkTheme} onChange={changeTheme}>
-          </Switch>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
+          <Typography>Light</Typography>
 
+          {/* Dark mode switch */}
+          <Switch
+            label="Mode"
+            checked={isDarkTheme}
+            onChange={changeTheme}
+            sx={{ color: "white" }}
+          ></Switch>
+          <Typography>Dark</Typography>
         </Toolbar>
       </Container>
     </AppBar>

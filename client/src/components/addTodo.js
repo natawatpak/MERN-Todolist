@@ -12,34 +12,37 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 
 export default function AddTodo({ fetchList }) {
+  // Keep input value
   const [todo, setTodo] = useState({
     topic: "",
     description: "",
     deadline: null,
   });
 
+  // Keep modal state
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // These methods will update the state properties.
+  // Update the state properties.
   function updateTodo(value) {
     return setTodo((prev) => {
       return { ...prev, ...value };
     });
   }
 
-  // This function will handle the submission.
+  // Handle the submission for adding a new record.
   async function onSubmit(e) {
     e.preventDefault();
 
-    // When a post request is sent to the create url, we'll add a new record to the database.
+    // Create new record.
     const newTodo = { ...todo };
-    
+    // Format date to string
     if (newTodo.deadline !== null){
         newTodo.deadline = newTodo.deadline.format('YYYY-MM-DD')
     }
 
+    // Send post request to server to add a new record to the database.
     await fetch("http://localhost:5050/record", {
       method: "POST",
       headers: {
@@ -51,15 +54,18 @@ export default function AddTodo({ fetchList }) {
       return;
     });
 
+    // Clear fields, Fetch records and Close the modal 
     setTodo({ topic: "", description: "", deadline: null });
     fetchList()
     handleClose()
   }
 
-  // This following section will display the form that takes the input from the user.
   return (
     <div>
+      {/* Add To-do button */}
       <Button variant="" onClick={handleOpen}><Typography variant="h5">+ Add To-do</Typography></Button>
+
+      {/* Modal and Input fields */}
       <Modal
         open={open}
         onClose={handleClose}
