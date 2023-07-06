@@ -20,6 +20,8 @@ export default function UpdateTodo(props) {
     deadline: props.todo ? props.todo.deadline : null,
   });
 
+  const [validateError, setValidate] = useState('');
+
   // Update the state properties.
   function updateTodo(value) {
     return setTodo((prev) => {
@@ -30,6 +32,12 @@ export default function UpdateTodo(props) {
   // Handle the submission for updating a record.
   async function onSubmit(e) {
     e.preventDefault();
+
+    if (!todo.topic){
+      setValidate('Topic is missing')
+      return
+    }
+
     const editedTodo = {
       topic: todo.topic,
       description: todo.description,
@@ -66,6 +74,8 @@ export default function UpdateTodo(props) {
               id="topic"
               label="Topic"
               value={todo.topic}
+              error ={validateError !== ''}
+              helperText={validateError}
               onChange={(newValue) =>
                 updateTodo({ topic: newValue.target.value })
               }
@@ -86,6 +96,7 @@ export default function UpdateTodo(props) {
               <DatePicker
                 id="deadline"
                 label="Deadline"
+                format="DD-MM-YYYY"
                 value={todo.deadline}
                 onChange={(newValue) => updateTodo({ deadline: newValue })}
                 sx={{ marginY: 2 }}
