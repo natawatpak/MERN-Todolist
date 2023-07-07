@@ -27,12 +27,13 @@ function NavBar({ isDarkTheme, changeTheme }) {
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
+              fontFamily: "IBM Plex Mono",
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            To-do list
+            📝To-do
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}></Box>
           {/* Top navigation bar in xs */}
@@ -55,7 +56,7 @@ function NavBar({ isDarkTheme, changeTheme }) {
               textDecoration: "none",
             }}
           >
-            To-do list
+            To-do
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Typography>Light</Typography>
